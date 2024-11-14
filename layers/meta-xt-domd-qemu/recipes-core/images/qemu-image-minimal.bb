@@ -2,7 +2,6 @@ require recipes-core/images/core-image-minimal.bb
 
 PACKAGE_INSTALL:append = " \
     coreutils \
-    u-boot \
     xen \
     xen-tools-scripts-network \
     xen-tools-scripts-block \
