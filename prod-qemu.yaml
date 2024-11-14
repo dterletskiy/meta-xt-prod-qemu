@@ -7,6 +7,7 @@ variables:
   DOM0_MACHINE: "generic-armv8-xt"
   DOMD_BUILD_DIR: "build-domd"
   DOMD_MACHINE: "generic-armv8-xt"
+  XT_DOMD_CONFIG_NAME: "domd.cfg"
 
 common_data:
   # Sources used by all yocto-based domains
@@ -46,9 +47,10 @@ components:
         - *COMMON_CONF
         - [MACHINE, "%{DOM0_MACHINE}"]
         - [XT_DOM_NAME, "dom0"]
-        # - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
+        - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
         # - [XT_DOMD_DTB_NAME, "%{XT_DOMD_DTB_NAME}"]
         # - [XT_GUEST_INSTALL, "domd"]
+        - [XT_GUEST_INSTALL, "domd"]
 
         - [DISTRO_FEATURES:append, " xen"]
         - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
@@ -67,9 +69,15 @@ components:
         # Do not install kernel image to rootfs to decrease initrd size
         - ["RDEPENDS_${KERNEL_PACKAGE_NAME}-base", ""]
 
+        # Skip warning about missing "virtualization" distro feature
+        - [SKIP_META_VIRT_SANITY_CHECK, "1"]
+
+        # Use hypervisor console on all guests
+        - [SERIAL_CONSOLES, "115200;hvc0"]
+
         # Build our own Xen version rather than proposed by meta-virtualization
-        - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
-        - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
+        - [PREFERRED_VERSION_xen, "4.19+stable%"]
+        - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
 
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
