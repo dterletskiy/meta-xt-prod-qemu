@@ -50,7 +50,6 @@ components:
         - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
         # - [XT_DOMD_DTB_NAME, "%{XT_DOMD_DTB_NAME}"]
         # - [XT_GUEST_INSTALL, "domd"]
-        - [XT_GUEST_INSTALL, "domd"]
 
         - [DISTRO_FEATURES:append, " xen"]
         - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
@@ -80,6 +79,7 @@ components:
         - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
 
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
+        - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
 
       layers:
