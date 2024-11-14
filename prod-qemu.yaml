@@ -24,7 +24,7 @@ common_data:
       url: "https://github.com/xen-troops/meta-xt-common.git"
       rev: 0890d85d29c29265663b5e0eac7998916462c05c
     - type: git
-      url: "https://github.com/dterletskiy/meta-emulator.git"
+      url: "https://github.com/dterletskiy/meta-xt-prod-qemu.git"
       rev: main
 
 
@@ -75,9 +75,6 @@ components:
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
 
       layers:
-        - "../poky/meta"
-        - "../poky/meta-poky"
-        - "../poky/meta-yocto-bsp"
         - "../meta-openembedded/meta-oe"
         - "../meta-openembedded/meta-filesystems"
         - "../meta-openembedded/meta-python"
@@ -86,8 +83,8 @@ components:
         - "../meta-xt-common/meta-xt-domx"
         - "../meta-xt-common/meta-xt-dom0"
         - "../meta-xt-common/meta-xt-control-domain"
-        - "../../layers/meta-xt-domx-qemu"
-        - "../../layers/meta-xt-dom0-qemu"
+        - "../layers/meta-xt-domx-qemu"
+        - "../layers/meta-xt-dom0-qemu"
       build_target: core-image-thin-initramfs
       # external_src:
       #   domd: "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{MACHINE}/"
@@ -97,51 +94,48 @@ components:
         - "tmp/deploy/images/%{DOM0_MACHINE}/Image"
         - "tmp/deploy/images/%{DOM0_MACHINE}/uInitramfs"
 
-  domd:
-    build-dir: "%{YOCTOS_WORK_DIR}"
-    sources:
-      - *COMMON_SOURCES
-    builder:
-      type: yocto
-      work_dir: "%{DOM0_BUILD_DIR}"
-      conf:
-        - *COMMON_CONF
-        - [MACHINE, "%{DOMD_MACHINE}"]
-        - [XT_DOM_NAME, "domd"]
+  # domd:
+  #   build-dir: "%{YOCTOS_WORK_DIR}"
+  #   sources:
+  #     - *COMMON_SOURCES
+  #   builder:
+  #     type: yocto
+  #     work_dir: "%{DOMD_BUILD_DIR}"
+  #     conf:
+  #       - *COMMON_CONF
+  #       - [MACHINE, "%{DOMD_MACHINE}"]
+  #       - [XT_DOM_NAME, "domd"]
 
-        - [DISTRO_FEATURES:append, " xen"]
-        - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
-                                    ptest multiarch wayland vulkan sysvinit x11
-                                    gtk gobject-introspection-data wifi nfc
-                                    bluetooth irda zeroconf 3g"]
+  #       - [DISTRO_FEATURES:append, " xen"]
+  #       - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
+  #                                   ptest multiarch wayland vulkan sysvinit x11
+  #                                   gtk gobject-introspection-data wifi nfc
+  #                                   bluetooth irda zeroconf 3g"]
 
-        # Disable HWDB which quite huge (around 15MB) and is not required at all
-        - [BAD_RECOMMENDATIONS:append, " udev-hwdb"]
+  #       # Disable HWDB which quite huge (around 15MB) and is not required at all
+  #       - [BAD_RECOMMENDATIONS:append, " udev-hwdb"]
 
-        - [BUILD_REPRODUCIBLE_BINARIES, "1"]
+  #       - [BUILD_REPRODUCIBLE_BINARIES, "1"]
 
-        # Enable systemd
-        - [INIT_MANAGER, "systemd"]
+  #       # Enable systemd
+  #       - [INIT_MANAGER, "systemd"]
 
-        # Do not install kernel image to rootfs to decrease initrd size
-        - ["RDEPENDS_${KERNEL_PACKAGE_NAME}-base", ""]
+  #       # Do not install kernel image to rootfs to decrease initrd size
+  #       - ["RDEPENDS_${KERNEL_PACKAGE_NAME}-base", ""]
 
-        # Build our own Xen version rather than proposed by meta-virtualization
-        - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
-        - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
+  #       # Build our own Xen version rather than proposed by meta-virtualization
+  #       - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
+  #       - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
 
-      layers:
-        - "../poky/meta"
-        - "../poky/meta-poky"
-        - "../poky/meta-yocto-bsp"
-        - "../meta-openembedded/meta-oe"
-        - "../meta-openembedded/meta-filesystems"
-        - "../meta-openembedded/meta-python"
-        - "../meta-openembedded/meta-networking"
-        - "../meta-virtualization"
-        - "../meta-xt-common/meta-xt-domx"
-        - "../../layers/meta-xt-domx-qemu"
-        - "../../layers/meta-xt-domd-qemu"
-      build_target: core-image-thin-initramfs
-      target_images:
-        - "tmp/deploy/images/%{DOMD_MACHINE}/Image"
+  #     layers:
+  #       - "../meta-openembedded/meta-oe"
+  #       - "../meta-openembedded/meta-filesystems"
+  #       - "../meta-openembedded/meta-python"
+  #       - "../meta-openembedded/meta-networking"
+  #       - "../meta-virtualization"
+  #       - "../meta-xt-common/meta-xt-domx"
+  #       - "../../layers/meta-xt-domx-qemu"
+  #       - "../../layers/meta-xt-domd-qemu"
+  #     build_target: core-image-thin-initramfs
+  #     target_images:
+  #       - "tmp/deploy/images/%{DOMD_MACHINE}/Image"
