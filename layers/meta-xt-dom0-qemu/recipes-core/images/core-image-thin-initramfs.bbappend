@@ -1,0 +1,1 @@
+IMAGE_INSTALL:remove = " ${XT_GUEST_INSTALL}"
