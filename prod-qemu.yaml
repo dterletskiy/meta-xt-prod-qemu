@@ -47,9 +47,14 @@ components:
         - *COMMON_CONF
         - [MACHINE, "%{DOM0_MACHINE}"]
         - [XT_DOM_NAME, "dom0"]
-        - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
+
+        # - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
         # - [XT_DOMD_DTB_NAME, "%{XT_DOMD_DTB_NAME}"]
         # - [XT_GUEST_INSTALL, "domd"]
+        - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
+        - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
+        - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
+        - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domu/domu.bbappend"]
 
         - [DISTRO_FEATURES:append, " xen"]
         - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
@@ -78,10 +83,6 @@ components:
         - [PREFERRED_VERSION_xen, "4.19+stable%"]
         - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
 
-        - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
-        - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
-        - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
-
       layers:
         - "../meta-openembedded/meta-oe"
         - "../meta-openembedded/meta-filesystems"
@@ -102,48 +103,54 @@ components:
         - "tmp/deploy/images/%{DOM0_MACHINE}/Image"
         - "tmp/deploy/images/%{DOM0_MACHINE}/uInitramfs"
 
-  # domd:
-  #   build-dir: "%{YOCTOS_WORK_DIR}"
-  #   sources:
-  #     - *COMMON_SOURCES
-  #   builder:
-  #     type: yocto
-  #     work_dir: "%{DOMD_BUILD_DIR}"
-  #     conf:
-  #       - *COMMON_CONF
-  #       - [MACHINE, "%{DOMD_MACHINE}"]
-  #       - [XT_DOM_NAME, "domd"]
+  domd:
+    build-dir: "%{YOCTOS_WORK_DIR}"
+    sources:
+      - *COMMON_SOURCES
+    builder:
+      type: yocto
+      work_dir: "%{DOMD_BUILD_DIR}"
+      conf:
+        - *COMMON_CONF
+        - [MACHINE, "%{DOMD_MACHINE}"]
+        - [XT_DOM_NAME, "domd"]
 
-  #       - [DISTRO_FEATURES:append, " xen"]
-  #       - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
-  #                                   ptest multiarch wayland vulkan sysvinit x11
-  #                                   gtk gobject-introspection-data wifi nfc
-  #                                   bluetooth irda zeroconf 3g"]
+        - [DISTRO_FEATURES:append, " xen"]
+        - [DISTRO_FEATURES:remove, "acl alsa argp pcmcia usbgadget usbhost opengl
+                                    ptest multiarch wayland vulkan sysvinit x11
+                                    gtk gobject-introspection-data wifi nfc
+                                    bluetooth irda zeroconf 3g"]
 
-  #       # Disable HWDB which quite huge (around 15MB) and is not required at all
-  #       - [BAD_RECOMMENDATIONS:append, " udev-hwdb"]
+        # Disable HWDB which quite huge (around 15MB) and is not required at all
+        - [BAD_RECOMMENDATIONS:append, " udev-hwdb"]
 
-  #       - [BUILD_REPRODUCIBLE_BINARIES, "1"]
+        - [BUILD_REPRODUCIBLE_BINARIES, "1"]
 
-  #       # Enable systemd
-  #       - [INIT_MANAGER, "systemd"]
+        # Enable systemd
+        - [INIT_MANAGER, "systemd"]
 
-  #       # Do not install kernel image to rootfs to decrease initrd size
-  #       - ["RDEPENDS_${KERNEL_PACKAGE_NAME}-base", ""]
+        # Do not install kernel image to rootfs to decrease initrd size
+        - ["RDEPENDS_${KERNEL_PACKAGE_NAME}-base", ""]
 
-  #       # Build our own Xen version rather than proposed by meta-virtualization
-  #       - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
-  #       - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
+        # Skip warning about missing "virtualization" distro feature
+        - [SKIP_META_VIRT_SANITY_CHECK, "1"]
 
-  #     layers:
-  #       - "../meta-openembedded/meta-oe"
-  #       - "../meta-openembedded/meta-filesystems"
-  #       - "../meta-openembedded/meta-python"
-  #       - "../meta-openembedded/meta-networking"
-  #       - "../meta-virtualization"
-  #       - "../meta-xt-common/meta-xt-domx"
-  #       - "../../layers/meta-xt-domx-qemu"
-  #       - "../../layers/meta-xt-domd-qemu"
-  #     build_target: core-image-thin-initramfs
-  #     target_images:
-  #       - "tmp/deploy/images/%{DOMD_MACHINE}/Image"
+        # Use hypervisor console on all guests
+        - [SERIAL_CONSOLES, "115200;hvc0"]
+
+        # Build our own Xen version rather than proposed by meta-virtualization
+        - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
+        - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
+
+      layers:
+        - "../meta-openembedded/meta-oe"
+        - "../meta-openembedded/meta-filesystems"
+        - "../meta-openembedded/meta-python"
+        - "../meta-openembedded/meta-networking"
+        - "../meta-virtualization"
+        - "../meta-xt-common/meta-xt-domx"
+        - "../meta-xt-prod-qemu/layers/meta-xt-domx-qemu"
+        - "../meta-xt-prod-qemu/layers/meta-xt-domd-qemu"
+      build_target: core-image-thin-initramfs
+      target_images:
+        - "tmp/deploy/images/%{DOMD_MACHINE}/Image"
