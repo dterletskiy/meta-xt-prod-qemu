@@ -83,8 +83,8 @@ components:
         - "../meta-xt-common/meta-xt-domx"
         - "../meta-xt-common/meta-xt-dom0"
         - "../meta-xt-common/meta-xt-control-domain"
-        - "../layers/meta-xt-domx-qemu"
-        - "../layers/meta-xt-dom0-qemu"
+        - "../meta-xt-prod-qemu/layers/meta-xt-domx-qemu"
+        - "../meta-xt-prod-qemu/layers/meta-xt-dom0-qemu"
       build_target: core-image-thin-initramfs
       # external_src:
       #   domd: "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{MACHINE}/"
