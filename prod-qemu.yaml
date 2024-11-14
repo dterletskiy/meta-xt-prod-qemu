@@ -59,7 +59,7 @@ common_data:
 
     # Build our own Xen version rather than proposed by meta-virtualization
     - [PREFERRED_VERSION_xen, "4.19+stable%"]
-    - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
+    - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
 
 components:
   dom0:
