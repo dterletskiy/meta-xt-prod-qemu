@@ -58,8 +58,8 @@ common_data:
     - [SERIAL_CONSOLES, "115200;hvc0"]
 
     # Build our own Xen version rather than proposed by meta-virtualization
-    - [PREFERRED_VERSION_xen, "4.19+stable%"]
-    - [PREFERRED_VERSION_xen-tools, "4.19.0+stable%"]
+    - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
+    - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
 
 components:
   dom0:
