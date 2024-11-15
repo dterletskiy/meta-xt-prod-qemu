@@ -10,7 +10,7 @@ variables:
   DOMD_MACHINE: "generic-armv8-xt"
   BUILD_TARGET_DOMD: "qemu-image-minimal"
   XT_DOMD_CONFIG_NAME: "domd.cfg"
-  XT_DOMD_DTB_NAME: "domd.dtb"
+  XT_DOMD_DTB_NAME: "qemu.dtb"
 
 common_data:
   # Sources used by all yocto-based domains
@@ -89,8 +89,8 @@ components:
         - [XT_DOMD_CONFIG_NAME, "%{XT_DOMD_CONFIG_NAME}"]
         - [XT_DOMD_DTB_NAME, "%{XT_DOMD_DTB_NAME}"]
         - [XT_GUEST_INSTALL, "domd"]
-        - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
-        - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
+        # - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domd"]
+        # - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
         - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domu/domu.bbappend"]
 
