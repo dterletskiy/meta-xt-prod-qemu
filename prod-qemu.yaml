@@ -64,6 +64,14 @@ common_data:
     - [PREFERRED_VERSION_xen, "4.19.0+stable%"]
     - [PREFERRED_VERSION_xen-tools, "4.19+stable%"]
 
+  layers: &COMMON_LAYERS
+    - "../meta-openembedded/meta-oe"
+    - "../meta-openembedded/meta-filesystems"
+    - "../meta-openembedded/meta-python"
+    - "../meta-openembedded/meta-networking"
+    - "../meta-virtualization"
+    - "../meta-xt-common/meta-xt-domx"
+
 components:
   dom0:
     build-dir: "%{YOCTOS_WORK_DIR}"
