@@ -1,4 +1,6 @@
 /dts-v1/;
 
 / {
+   passthrough {
+   }
 };
