@@ -93,7 +93,6 @@ components:
         # - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domd/domd.bbappend"]
         - [BBMASK:append, " meta-xt-common/meta-xt-control-domain/recipes-guest/domu"]
         - [BBMASK:append, " meta-xt-prod-qemu/layers/meta-xt-dom0-qemu/recipes-guests/domu/domu.bbappend"]
-
       layers:
         - "../meta-openembedded/meta-oe"
         - "../meta-openembedded/meta-filesystems"
@@ -125,7 +124,6 @@ components:
         - *COMMON_CONF
         - [MACHINE, "%{DOMD_MACHINE}"]
         - [XT_DOM_NAME, "domd"]
-
       layers:
         - "../meta-openembedded/meta-oe"
         - "../meta-openembedded/meta-filesystems"
@@ -141,3 +139,21 @@ components:
         - "tmp/deploy/images/%{DOMD_MACHINE}/Image"
         - "tmp/deploy/images/%{DOMD_MACHINE}/%{BUILD_TARGET_DOMD}-%{DOMD_MACHINE}.rootfs.ext4"
         - "tmp/deploy/images/%{DOMD_MACHINE}/xen-%{DOMD_MACHINE}"
+
+images:
+  full:
+    type: gpt
+    desc: "Full SD-card/eMMC image"
+    partitions:
+      boot:
+        gpt_type: 21686148-6449-6E6F-744E-656564454649 # BIOS boot partition (kinda...)
+        type: ext4
+        size: 256 MiB
+        items:
+          "kernel-dom0": "%{YOCTOS_WORK_DIR}/%{DOM0_BUILD_DIR}/tmp/deploy/images/%{DOM0_MACHINE}/Image"
+          "rootfs-dom0": "%{YOCTOS_WORK_DIR}/%{DOM0_BUILD_DIR}/tmp/deploy/images/%{DOM0_MACHINE}/%{BUILD_TARGET_DOM0}-%{DOM0_MACHINE}.rootfs.cpio.gz"
+          "xen": "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{DOMD_MACHINE}/xen-%{DOMD_MACHINE}"
+      domd_rootfs:
+        gpt_type: B921B045-1DF0-41C3-AF44-4C6F280D3FAE # Linux aarch64 root
+        type: raw_image
+        image_path: "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{DOMD_MACHINE}/%{BUILD_TARGET_DOMD}-%{DOMD_MACHINE}.rootfs.ext4"

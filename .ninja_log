@@ -1,0 +1,7 @@
+# ninja log v5
+1	902	1734534102153366787	yocto/meta-xt-prod-qemu	bd5c597f8f99c2f8
+1	902	1734534102153366787	/mnt/host/epam/meta-xt-prod-qemu/.stamps/yocto--yocto-meta--xt--prod--qemu--https---github.com-dterletskiy-meta--xt--prod--qemu.git--clone	bd5c597f8f99c2f8
+902	922	1734534102172365368	/mnt/host/epam/meta-xt-prod-qemu/.stamps/yocto--yocto-meta--xt--prod--qemu--https---github.com-dterletskiy-meta--xt--prod--qemu.git--checkout	b80696557cd0d08b
+1	955	1734534102205362902	yocto/meta-xt-common	3529af8d7e46637d
+1	955	1734534102205362902	/mnt/host/epam/meta-xt-prod-qemu/.stamps/yocto--yocto-meta--xt--common--https---github.com-xen--troops-meta--xt--common.git--clone	3529af8d7e46637d
+955	979	1734534102230361034	/mnt/host/epam/meta-xt-prod-qemu/.stamps/yocto--yocto-meta--xt--common--https---github.com-xen--troops-meta--xt--common.git--checkout	524c82451bed133c
