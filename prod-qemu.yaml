@@ -153,6 +153,7 @@ images:
           "kernel-dom0": "%{YOCTOS_WORK_DIR}/%{DOM0_BUILD_DIR}/tmp/deploy/images/%{DOM0_MACHINE}/Image"
           "rootfs-dom0": "%{YOCTOS_WORK_DIR}/%{DOM0_BUILD_DIR}/tmp/deploy/images/%{DOM0_MACHINE}/%{BUILD_TARGET_DOM0}-%{DOM0_MACHINE}.rootfs.cpio.gz"
           "xen": "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{DOMD_MACHINE}/xen-%{DOMD_MACHINE}"
+          "boot/boot.scr": "%{YOCTOS_WORK_DIR}/%{DOMD_BUILD_DIR}/tmp/deploy/images/%{DOMD_MACHINE}/boot.scr"
       domd_rootfs:
         gpt_type: B921B045-1DF0-41C3-AF44-4C6F280D3FAE # Linux aarch64 root
         type: raw_image
