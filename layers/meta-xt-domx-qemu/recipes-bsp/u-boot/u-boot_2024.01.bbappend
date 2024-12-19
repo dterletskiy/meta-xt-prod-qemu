@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += "file://u-boot-fragment.cfg \
-            boot.cmd
+            boot.cmd \
 "
 
 KCONFIG_FRAGMENTS += "u-boot-fragment.cfg"
