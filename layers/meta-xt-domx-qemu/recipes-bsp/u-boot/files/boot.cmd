@@ -11,36 +11,24 @@ setenv ROOTFS_SIZE         0x0
 
 
 setenv patch_dtb_chosen '
-   echo "Patching node: \"/chosen\""
-   echo "-----"
+   echo "Patching node: /chosen"
    fdt resize
-   echo "-----"
    fdt set /chosen \\#address-cells <1>
-   echo "-----"
    fdt set /chosen \\#size-cells <1>
-   echo "-----"
    fdt set /chosen bootargs "${XEN_CMDLINE}"
-   echo "-----"
-   echo "Patching node: \"/chosen/module@0\""
+
+   echo "Patching node: /chosen/module@0"
    fdt resize
-   echo "-----"
    fdt mknod /chosen module@0
-   echo "-----"
    fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
-   echo "-----"
    fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>
-   echo "-----"
    fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}"
-   echo "-----"
    echo "Patching node: /chosen/module@1"
+
    fdt resize
-   echo "-----"
    fdt mknod /chosen module@1
-   echo "-----"
    fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module"
-   echo "-----"
    fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>
-   echo "-----"
 '
 
 setenv test_dtb_chosen '
