@@ -11,21 +11,21 @@ setenv ROOTFS_SIZE         0x0
 
 
 setenv patch_dtb_chosen '
-   fdt resize
-   fdt set /chosen \#address-cells <1>
-   fdt set /chosen \#size-cells <1>
-   fdt set /chosen bootargs "${XEN_CMDLINE}"
+   fdt resize;
+   fdt set /chosen \#address-cells <1>;
+   fdt set /chosen \#size-cells <1>;
+   fdt set /chosen bootargs "${XEN_CMDLINE}";
 
-   fdt resize
-   fdt mknod /chosen module@0
-   fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
-   fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>
-   fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}"
+   fdt resize;
+   fdt mknod /chosen module@0;
+   fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module";
+   fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>;
+   fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}";
 
-   fdt resize
-   fdt mknod /chosen module@1
-   fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module"
-   fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>
+   fdt resize;
+   fdt mknod /chosen module@1;
+   fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module";
+   fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>;
 '
 
 setenv boot_xen '
