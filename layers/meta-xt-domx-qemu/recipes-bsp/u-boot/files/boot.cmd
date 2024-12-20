@@ -10,6 +10,24 @@ setenv ROOTFS_SIZE         0x0
 
 
 
+setenv load_xen '
+   size virtio 0:1 xen
+   setenv XEN_SIZE 0x${filesize}
+   ext4load virtio 0:1 ${XEN_ADDRESS} xen
+'
+
+setenv load_kernel '
+   size virtio 0:1 kernel-dom0
+   setenv KERNEL_SIZE 0x${filesize}
+   ext4load virtio 0:1 ${KERNEL_ADDRESS} kernel-dom0
+'
+
+setenv load_rootfs '
+   size virtio 0:1 rootfs-dom0
+   setenv ROOTFS_SIZE 0x${filesize}
+   ext4load virtio 0:1 ${ROOTFS_ADDRESS} rootfs-dom0
+'
+
 setenv patch_dtb_chosen '
    echo "Patching node: /chosen"
    fdt resize
@@ -31,10 +49,17 @@ setenv patch_dtb_chosen '
    fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>
 '
 
+setenv patch_dtb '
+   echo "Setup dtb addresses"
+   fdt addr -c
+   setenv DTB_ADDRESS ${fdtcontroladdr}
+   fdt addr ${DTB_ADDRESS}
+
+   run patch_dtb_chosen
+'
+
 setenv test_dtb_chosen '
-   fdt list /chosen
-   fdt list /chosen/module@0
-   fdt list /chosen/module@1
+   fdt print /chosen
 '
 
 setenv boot_xen '
@@ -45,19 +70,7 @@ setenv boot_xen '
 
 setenv bootargs ${XEN_CMDLINE}
 
-size virtio 0:1 xen
-setenv XEN_SIZE 0x${filesize}
-ext4load virtio 0:1 ${XEN_ADDRESS} xen
-
-size virtio 0:1 kernel-dom0
-setenv KERNEL_SIZE 0x${filesize}
-ext4load virtio 0:1 ${KERNEL_ADDRESS} kernel-dom0
-
-size virtio 0:1 rootfs-dom0
-setenv ROOTFS_SIZE 0x${filesize}
-ext4load virtio 0:1 ${ROOTFS_ADDRESS} rootfs-dom0
-
-fdt addr -c
-setenv DTB_ADDRESS ${fdtcontroladdr}
-
-fdt addr ${DTB_ADDRESS}
+run load_xen
+run load_kernel
+run load_rootfs
+run patch_dtb
