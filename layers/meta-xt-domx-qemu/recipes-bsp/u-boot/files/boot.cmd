@@ -14,9 +14,9 @@ setenv patch_dtb_chosen '
    echo "-----"; \
    fdt resize; \
    echo "-----"; \
-   fdt set /chosen \#address-cells <1>; \
+   fdt set /chosen \\#address-cells <1>; \
    echo "-----"; \
-   fdt set /chosen \#size-cells <1>; \
+   fdt set /chosen \\#size-cells <1>; \
    echo "-----"; \
    fdt set /chosen bootargs "${XEN_CMDLINE}"; \
    echo "-----"; \
