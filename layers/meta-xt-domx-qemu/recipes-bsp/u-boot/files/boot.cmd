@@ -42,6 +42,12 @@ setenv patch_dtb_chosen '
    echo "-----"; \
 '
 
+setenv test_dtb_chosen '
+   fdt list /chosen
+   fdt list /chosen/module@0
+   fdt list /chosen/module@1
+'
+
 setenv boot_xen '
    booti ${XEN_ADDRESS} - ${DTB_ADDRESS}
 '
@@ -66,11 +72,3 @@ fdt addr -c
 setenv DTB_ADDRESS ${fdtcontroladdr}
 
 fdt addr ${DTB_ADDRESS}
-
-
-
-
-
-fdt list /chosen
-fdt list /chosen/module@0
-fdt list /chosen/module@1
