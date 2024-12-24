@@ -41,8 +41,8 @@ setenv patch_dtb_chosen '
    fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
    fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>
    fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}"
-   echo "Patching node: /chosen/module@1"
 
+   echo "Patching node: /chosen/module@1"
    fdt resize
    fdt mknod /chosen module@1
    fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module"
