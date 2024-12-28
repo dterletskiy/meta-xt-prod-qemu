@@ -28,6 +28,23 @@ setenv load_rootfs '
    ext4load virtio 0:1 ${ROOTFS_ADDRESS} rootfs-dom0
 '
 
+setenv patch_dtb_chosen_module0 '
+   echo "Patching node: /chosen/module@0"
+   fdt resize
+   fdt mknod /chosen module@0
+   fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
+   fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>
+   fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}"
+'
+
+setenv patch_dtb_chosen_module1 '
+   echo "Patching node: /chosen/module@1"
+   fdt resize
+   fdt mknod /chosen module@1
+   fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module"
+   fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>
+'
+
 setenv patch_dtb_chosen '
    echo "Patching node: /chosen"
    fdt resize
@@ -35,18 +52,8 @@ setenv patch_dtb_chosen '
    fdt set /chosen \\#size-cells <1>
    fdt set /chosen bootargs "${XEN_CMDLINE}"
 
-   echo "Patching node: /chosen/module@0"
-   fdt resize
-   fdt mknod /chosen module@0
-   fdt set /chosen/module@0 compatible "xen,linux-zimage" "xen,multiboot-module"
-   fdt set /chosen/module@0 reg <${KERNEL_ADDRESS} ${KERNEL_SIZE}>
-   fdt set /chosen/module@0 bootargs "${KERNEL_CMDLINE}"
-
-   echo "Patching node: /chosen/module@1"
-   fdt resize
-   fdt mknod /chosen module@1
-   fdt set /chosen/module@1 compatible "xen,linux-initrd" "xen,multiboot-module"
-   fdt set /chosen/module@1 reg <${ROOTFS_ADDRESS} ${ROOTFS_SIZE}>
+   run patch_dtb_chosen_module0
+   run patch_dtb_chosen_module1
 '
 
 setenv patch_dtb '
