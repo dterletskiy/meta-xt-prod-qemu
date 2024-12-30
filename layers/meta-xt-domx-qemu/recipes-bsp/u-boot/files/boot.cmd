@@ -1,6 +1,6 @@
 setenv XEN_ADDRESS         0x50000000
 setenv XEN_SIZE            0x0
-setenv XEN_CMDLINE         "dom0_mem=3G,max:3G loglvl=all guest_loglvl=all console=dtuart"
+setenv XEN_CMDLINE         "dom0_mem=3G,max:3G loglvl=all guest_loglvl=all console=dtuart nokaslr"
 setenv DTB_ADDRESS         0x51000000
 setenv KERNEL_ADDRESS      0x60000000
 setenv KERNEL_SIZE         0x0
