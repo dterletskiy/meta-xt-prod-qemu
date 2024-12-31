@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/${PN}:"
 
 SRC_URI += " \
-    file://defconfig.cfg \
+    file://debug.cfg \
   "
 
-KBUILD_DEFCONFIG = "defconfig.cfg"
+KBUILD_DEFCONFIG = "debug.cfg"
