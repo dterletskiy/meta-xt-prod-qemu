@@ -4,4 +4,4 @@ SRC_URI += " \
     file://debug.cfg \
   "
 
-KBUILD_DEFCONFIG = "debug.cfg"
+KERNEL_CONFIG_FRAGMENTS += "debug.cfg"
