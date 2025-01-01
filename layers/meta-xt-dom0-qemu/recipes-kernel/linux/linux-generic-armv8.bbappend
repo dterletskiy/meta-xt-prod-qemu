@@ -9,5 +9,6 @@ KERNEL_CONFIG_FRAGMENTS += "debug.cfg"
 do_deploy:append() {
     if [ -f ${B}/vmlinux ]; then
         cp ${B}/vmlinux ${DEPLOYDIR}/${PN}-vmlinux-${PV}-${PR}
+        ln -sfr ${DEPLOYDIR}/${PN}-vmlinux-${PV}-${PR} ${DEPLOYDIR}/vmlinux
     fi
 }
