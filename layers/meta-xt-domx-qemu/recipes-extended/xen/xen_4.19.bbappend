@@ -1,3 +1,9 @@
+FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
+
+SRC_URI += " \
+    file://configs.cfg \
+    "
+
 DEPENDS += "u-boot-mkimage-native"
 
 do_deploy:append() {
