@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += " \
-    file://config.cfg \
+    file://early_printk_kvmtool.cfg \
     "
 
 DEPENDS += "u-boot-mkimage-native"
