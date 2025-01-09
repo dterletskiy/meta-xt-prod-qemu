@@ -1,7 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += " \
-    file://configs.cfg \
+    file://config.cfg \
     "
 
 DEPENDS += "u-boot-mkimage-native"
