@@ -1,6 +1,7 @@
 FILESEXTRAPATHS:prepend := "${THISDIR}/files:"
 
 SRC_URI += " \
+    file://debug.cfg \
     file://early_printk_kvmtool.cfg \
     "
 
