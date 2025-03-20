@@ -1,6 +1,20 @@
 /dts-v1/;
 
 / {
+   reserved-memory {
+      linux,rvgc_region@b0000000 {
+         compatible = "shared-dma-pool";
+         reg = <0x0 0xB0000000 0x0 0x10000000>;
+         linux;
+      };
+
+      linux,rvgc_region1@a0000000 {
+         compatible = "shared-dma-pool";
+         reg = <0x0 0xa0000000 0x0 0x10000000>;
+         linux;
+      };    
+   };
+
    passthrough {
    };
 };
